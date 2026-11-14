@@ -1,0 +1,6 @@
+{
+  "name": "Mod List Menu",
+  "description": "在主菜单添加只读模组列表按钮，显示当前已加载的 BepInEx 插件及其说明。",
+  "author": "lumoren",
+  "category": "UI"
+}
