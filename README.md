@@ -6,14 +6,14 @@
 
 适用于 **Windows 64 位 · Steam 正式版**，验证版本为 Build 26590676。装有 QoL Unknown 1.1.1 的环境也通过了读档和换层测试。
 
-- **第一次装模组**　[直接下载 v2.4.3 完整包](https://github.com/bilbillm/casualties-unknown-mods/releases/download/v2.4.3/AstartesMod-v2.4.3-Windows-x64-Full.zip)，内置 BepInEx 5 x64。
-- **已经装好 BepInEx 5 x64**　[直接下载 v2.4.3 仅模组包](https://github.com/bilbillm/casualties-unknown-mods/releases/download/v2.4.3/AstartesMod-v2.4.3-Mod-Only.zip)。
+- **第一次装模组**　[直接下载 v2.4.3 完整包](https://github.com/bilbillm/casualties-unknown-astartes/releases/download/v2.4.3/AstartesMod-v2.4.3-Windows-x64-Full.zip)，内置 BepInEx 5 x64。
+- **已经装好 BepInEx 5 x64**　[直接下载 v2.4.3 仅模组包](https://github.com/bilbillm/casualties-unknown-astartes/releases/download/v2.4.3/AstartesMod-v2.4.3-Mod-Only.zip)。
 
 1. 退出游戏。打开 Steam 库，右键《Casualties: Unknown》，选 **管理 → 浏览本地文件**。
 2. 右键下载的 ZIP，选 **全部解压缩**。打开解压后的文件夹，把里面的内容全部复制到刚才打开的游戏目录，也就是 **`CasualtiesUnknown.exe` 所在的那一层**。
 3. 从 Steam 启动游戏，点 **新游戏**，选第四位 **「[AST-01] 阿斯塔特」**。
 
-[图文教程与常见问题](docs/INSTALL.zh-CN.md) · [GitHub 发布页](https://github.com/bilbillm/casualties-unknown-mods/releases/latest)
+[图文教程与常见问题](docs/INSTALL.zh-CN.md) · [GitHub 发布页](https://github.com/bilbillm/casualties-unknown-astartes/releases/latest)
 
 ![下载完整包，将解压内容复制到游戏目录，在新游戏中选择阿斯塔特](docs/astartes-install-guide.png)
 
