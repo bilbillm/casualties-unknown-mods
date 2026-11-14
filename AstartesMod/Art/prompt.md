@@ -71,3 +71,16 @@ Quiet death in a pitch-dark dry cave, very subtle bluish gray overhead glint and
 失血死亡追加描述
 
 Death from wounds on a dry cavern floor. Preserve the helmet and full-body pose of the reference precisely. Set a damaged cobalt chainsword horizontally to the left in the dimly lit foreground, blade pointing left. Add slight battle scuffs and tiny fallen armor fragments, a small dark dried-red patch under the torso, faint golden highlights on the shoulder trim and gauntlet, and a restrained deep burgundy-black vignette. Keep the edges very dark and the middle readable. No exposed anatomy, large blood pool or flames.
+
+## 安装引导图
+
+[三步安装示意图](../../docs/astartes-install-guide.png)由内置 ImageGen 生成。
+
+```text
+Use case: infographic-diagram.
+Asset: a wide horizontal three-step installation illustration for the Chinese README and ZIP of a Windows Steam mod. Make a polished, compact 3:1 strip if possible (landscape, short enough to read as one image on GitHub). The viewer is a first-time mod player. Three equal side-by-side areas of matte dark navy with thin muted blue borders. Use clear, modern white sans-serif Chinese typography on dark backgrounds with restrained warm gold accents, pairing legible large icons with a hint of the dim blue pixel-art cave atmosphere of Casualties: Unknown.
+
+Text, verbatim, render only these strings. Left label “下载完整包”, center label “复制到游戏目录”, right label “选择阿斯塔特”. Print “ZIP” on the left document icon. The right character slot may show the exact small identifier “AST-01”. Place each label immediately below its own visual, with enough room to fit on one line and with consistent large type. Use clean glyphs, not pixel Chinese text.
+
+Left visual: one clearly recognizable ZIP document icon and downward download arrow. Center visual: an unzipped folder plus a few files, with a clear thin arrow pointing from this group into ONE open Windows game-folder icon that already contains a small executable icon. Avoid mock file lists or tiny text. Right visual: one highlighted black selection slot containing a full-body unarmoured Space Marine in a dark graphite black carapace bodysuit, an athletic muscular human of realistic proportions, bare head and bare hands, consistent with the selectable in-game sprite, no power armour, no weapons. A thin glowing warm border conveys selection. Illustration clear and uncluttered. No additional captions, no title, no English except ZIP and AST-01, no watermarks, no branding logos, no realistic UI screenshots. Crisp Chinese text and readable icons at GitHub README size. Render as an opaque image.
+```

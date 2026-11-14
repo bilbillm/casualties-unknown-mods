@@ -2,9 +2,24 @@
 
 扮演一名极限战士战团的阿斯塔特，穿上蓝金 Mk X 动力甲，带着爆弹枪和链锯剑深入《Casualties: Unknown》的洞穴与实验室。安装后，在新局选角界面选择第四位 **「[AST-01] 阿斯塔特」**。 [Steam 游戏页面](https://store.steampowered.com/app/4576490/)
 
-![阿斯塔特身穿 Mk X 动力甲的像素插图](AstartesMod/Art/astartes-cutscenes-source.png)
+## 下载与安装
+
+适用于 **Windows 64 位 · Steam 正式版**，验证版本为 Build 26590676。装有 QoL Unknown 1.1.1 的环境也通过了读档和换层测试。
+
+- **第一次装模组**　[直接下载 v2.4.3 完整包](https://github.com/bilbillm/casualties-unknown-mods/releases/download/v2.4.3/AstartesMod-v2.4.3-Windows-x64-Full.zip)，内置 BepInEx 5 x64。
+- **已经装好 BepInEx 5 x64**　[直接下载 v2.4.3 仅模组包](https://github.com/bilbillm/casualties-unknown-mods/releases/download/v2.4.3/AstartesMod-v2.4.3-Mod-Only.zip)。
+
+1. 退出游戏。打开 Steam 库，右键《Casualties: Unknown》，选 **管理 → 浏览本地文件**。
+2. 右键下载的 ZIP，选 **全部解压缩**。打开解压后的文件夹，把里面的内容全部复制到刚才打开的游戏目录，也就是 **`CasualtiesUnknown.exe` 所在的那一层**。
+3. 从 Steam 启动游戏，点 **新游戏**，选第四位 **「[AST-01] 阿斯塔特」**。
+
+[图文教程与常见问题](docs/INSTALL.zh-CN.md) · [GitHub 发布页](https://github.com/bilbillm/casualties-unknown-mods/releases/latest)
+
+![下载完整包，将解压内容复制到游戏目录，在新游戏中选择阿斯塔特](docs/astartes-install-guide.png)
 
 ## 角色与开局装备
+
+![阿斯塔特身穿 Mk X 动力甲的像素插图](AstartesMod/Art/astartes-cutscenes-source.png)
 
 - **强化体质。** 初始力量、韧性和智力分别为 **34 / 32 / 28**，血容量 **9 L**，体力上限为原版的 **10 倍**。伤口和骨折愈合更快，免疫毒液、感染与败血症，食物等来源的患病增量为原版的 10%。
 - **六件 Mk X 动力甲。** 头盔、胸腹甲、肩甲、臂甲与手甲、腿甲与战靴、动力背包均可在穿戴栏单独卸下。角色本体与装备的加成分别结算。穿上动力背包会自动打开泛光灯，并提高跑速。
@@ -19,21 +34,6 @@
 | **第二心脏** | 脑健康归零，死亡结算开始前 | 恢复循环和意识，将血量补到至少 80%。 |
 
 两个器官每局各能启动一次，触发时有提示，使用状态随读档和换层恢复。升级至 2.4.3 时，已有的正式版阿斯塔特存档可以继续使用，两个器官首次读档时均处于待命状态。
-
-## 安装
-
-**模组版本 2.4.3** 已在 Windows 上的 Steam 正式版 **Build 26590676** 验证，使用 **BepInEx 5 x64**。装有 QoL Unknown 1.1.1 的环境也通过了读档和换层测试。
-
-1. 在 Steam 库打开游戏的「管理 → 浏览本地文件」。如尚未安装 BepInEx，把 BepInEx 5 x64 解压到 `CasualtiesUnknown.exe` 所在目录，然后启动游戏一次以初始化。 [BepInEx 安装指南](https://docs.bepinex.dev/v5.4.21/articles/user_guide/installation/index.html)
-2. 退出游戏，将构建好的 `AstartesMod.dll`、`modinfo.json` 和整个 `Sprites` 文件夹放到游戏目录的 `BepInEx/plugins/AstartesMod/`。
-3. 重新启动游戏。开始新局时选择 **「[AST-01] 阿斯塔特」**，或者读取已有的阿斯塔特存档。新局发放初始装备，读档恢复当前装备、耐久和弹药。
-
-```text
-BepInEx/plugins/AstartesMod/
-├── AstartesMod.dll
-├── modinfo.json
-└── Sprites/
-```
 
 ## 从源码构建
 
