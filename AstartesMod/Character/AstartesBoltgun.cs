@@ -48,6 +48,22 @@ internal static class AstartesBoltgun
         }
     }
 
+    internal static void ClearCraftedAmmo(string id, GameObject item)
+    {
+        if (id == MagazineId)
+        {
+            item.GetComponent<AmmoScript>().rounds = 0;
+        }
+        else if (id == GunId)
+        {
+            var gun = item.GetComponent<GunScript>();
+            gun.hasMag = false;
+            gun.roundsInMag = 0;
+            gun.roundInChamber = GunScript.RoundInChamber.None;
+            item.GetComponent<SpriteRenderer>().sprite = gun.normalSpriteNoMag;
+        }
+    }
+
     [HarmonyPatch(typeof(AmmoScript), nameof(AmmoScript.AmmoTypeToItem))]
     private static class RoundIdPatch
     {

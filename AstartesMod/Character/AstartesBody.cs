@@ -75,7 +75,7 @@ internal sealed class AstartesBody : MonoBehaviour
         private static void Postfix(Body __instance, ref float __result)
         {
             if (IsAstartes(__instance))
-                __result *= AstartesPlugin.Profile.Speed * AstartesGear.ServoSpeed(__instance);
+                __result *= AstartesPlugin.Profile.Speed;
         }
     }
 

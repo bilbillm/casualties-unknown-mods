@@ -73,6 +73,7 @@ internal static class AstartesRun
     {
         // QoL Unknown 的换层绕过菜单，存档槽也可能在场景加载后才替换。使用原版实际恢复的存档。
         var save = JObject.Parse(json);
+        AstartesRecipes.LoadProgress(save);
         var body = PlayerCamera.main.body;
         if (body.charType != 0 || !SaveBelongsToAstartes(save))
             return save;
@@ -95,7 +96,7 @@ internal static class AstartesRun
         if (save[SaveKey] is JToken identity)
             return identity.Type == JTokenType.String && (string?)identity == CharacterId;
 
-        // 旧版丢失标记后，穿戴中的独有动力甲可用于识别该局。
+        // 仅为旧档保留动力甲识别。新存档会明确写入原版角色身份。
         return save["items"] is JArray items && items.OfType<JObject>().Any(item =>
             item["slot"]?.Type == JTokenType.Integer && (int?)item["slot"] == -1 &&
             item["id"]?.Type == JTokenType.String && AstartesGear.IsPowerArmour((string?)item["id"]));
@@ -114,10 +115,14 @@ internal static class AstartesRun
 
     private static byte[] ZipWithCharacter(string json)
     {
-        if (!PlayerCamera.main.body.TryGetComponent<AstartesBody>(out var astartes))
-            return SaveSystem.Zip(json);
-
         var save = ParseSave(json);
+        AstartesRecipes.SaveProgress(save);
+        if (!PlayerCamera.main.body.TryGetComponent<AstartesBody>(out var astartes))
+        {
+            save[SaveKey] = "vanilla";
+            return SaveSystem.Zip(save.ToString(Formatting.None));
+        }
+
         save[SaveKey] = CharacterId;
         save[OrgansKey] = new JObject
         {

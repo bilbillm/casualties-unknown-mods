@@ -7,7 +7,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyName>AstartesMod</AssemblyName>
     <RootNamespace>AstartesMod</RootNamespace>
-    <Version>2.4.3</Version>
+    <Version>2.4.4</Version>
     <Authors>lumoren</Authors>
     <Description>Playable Ultramarine Astartes with Mk X armour, chainsword and boltgun for Casualties Unknown.</Description>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>

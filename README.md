@@ -6,8 +6,8 @@
 
 适用于 **Windows 64 位 · Steam 正式版**，验证版本为 Build 26590676。装有 QoL Unknown 1.1.1 的环境也通过了读档和换层测试。
 
-- **第一次装模组**　[直接下载 v2.4.3 完整包](https://github.com/bilbillm/casualties-unknown-astartes/releases/download/v2.4.3/AstartesMod-v2.4.3-Windows-x64-Full.zip)，内置 BepInEx 5 x64。
-- **已经装好 BepInEx 5 x64**　[直接下载 v2.4.3 仅模组包](https://github.com/bilbillm/casualties-unknown-astartes/releases/download/v2.4.3/AstartesMod-v2.4.3-Mod-Only.zip)。
+- **第一次装模组**　[直接下载 Windows 完整包](https://github.com/bilbillm/casualties-unknown-astartes/releases/latest/download/AstartesMod-Windows-x64-Full.zip)，内置 BepInEx 5 x64。
+- **已经装好 BepInEx 5 x64**　[直接下载仅模组包](https://github.com/bilbillm/casualties-unknown-astartes/releases/latest/download/AstartesMod-Mod-Only.zip)。
 
 1. 退出游戏。打开 Steam 库，右键《Casualties: Unknown》，选 **管理 → 浏览本地文件**。
 2. 右键下载的 ZIP，选 **全部解压缩**。打开解压后的文件夹，把里面的内容全部复制到刚才打开的游戏目录，也就是 **`CasualtiesUnknown.exe` 所在的那一层**。
@@ -25,6 +25,7 @@
 - **六件 Mk X 动力甲。** 头盔、胸腹甲、肩甲、臂甲与手甲、腿甲与战靴、动力背包均可在穿戴栏单独卸下。角色本体与装备的加成分别结算。穿上动力背包会自动打开泛光灯，并提高跑速。
 - **爆弹枪与链锯剑。** 开局主手持全自动爆弹枪，副手持链锯剑。枪内有 60 发爆弹，背包里还有两个 60 发备用弹匣。链锯剑可按住攻击连续挥砍，命中怪物后的基础冷却约为 **0.185 秒**。
 - **专属外观、台词和音效。** 裸装、动力甲、过场和死亡画面都有阿斯塔特的像素美术。包扎、注射和取异物等操作使用人手贴图。角色有中英台词及低沉男声音效，戴上头盔后，常规发声带有通讯滤波。按 **B**（默认键位）喊出 **「For the Emperor!」**。
+- **所有角色都能制造 Mk X 装备。** v2.4.4 增加六件动力甲、链锯剑、爆弹枪、弹匣和爆弹的制作配方，所需智力为 14–20。[完整配方和智力要求](AstartesMod/README.md#制作配方)
 
 ## 第二心脏与贝利撒留炉
 

@@ -19,6 +19,7 @@ internal sealed class AstartesGear : IDisposable
     internal const string PackId = "astartes_mkx_pack";
     internal const string SwordId = "astartes_chainsword";
     internal const float DurabilityMultiplier = 3f;
+    private const float PackRunSpeed = 1.15f;
 
     internal static bool IsPowerArmour(string? id) =>
         id is HelmetId or CuirassId or ShouldersId or ArmsId or LegsId or PackId;
@@ -26,6 +27,7 @@ internal sealed class AstartesGear : IDisposable
     private readonly AstartesSprites sprites;
     private readonly Dictionary<string, GearItem> items;
     private GameObject? templates;
+    private static bool IsChinese => Locale.currentLangName?.StartsWith("zh", StringComparison.OrdinalIgnoreCase) == true;
 
     internal AstartesGear(AstartesSprites sprites)
     {
@@ -57,7 +59,7 @@ internal sealed class AstartesGear : IDisposable
                 ("CrusB", "MkXGreave"), ("FootB", "MkXSabaton")),
             Armour(PackId, "Mk X 动力背包", "Mk X Power Pack",
                 "为伺服系统供电，外侧设有爆弹弹匣舱。穿戴时点亮广域照明灯，跑速提高 15%。",
-                "Powers the servos and carries bolt magazines. Wear it to activate the floodlight and increase Astartes run speed by 15%.",
+                "Powers the servos and carries bolt magazines. Wear it to activate the floodlight and increase run speed by 15%.",
                 "back", "UpTorso", "MkXPack", 0.65f, 2.2f, 0f, -18),
             new GearItem(SwordId, "machete", "Chainsword", "阿斯塔特链锯剑", "Astartes Chainsword",
                 "动力链刃，可撕裂生物和障碍。挥砍命中会消耗耐久。",
@@ -177,14 +179,22 @@ internal sealed class AstartesGear : IDisposable
         }
     }
 
-    internal static float ServoSpeed(Body body) => IsWornAndIntact(body, "back", PackId) ? 1.15f : 1f;
-
     internal static bool HasHelmet(Body body) => IsWornAndIntact(body, "hat", HelmetId);
 
     private static bool IsWornAndIntact(Body body, string slot, string id)
     {
         var piece = body.GetWearableBySlotID(slot);
         return piece && piece.id == id && piece.condition > 0f;
+    }
+
+    [HarmonyPatch(typeof(Body), nameof(Body.actualMaxSpeed), MethodType.Getter)]
+    private static class PackServoPatch
+    {
+        private static void Postfix(Body __instance, ref float __result)
+        {
+            if (__instance.limbs != null && IsWornAndIntact(__instance, "back", PackId))
+                __result *= PackRunSpeed;
+        }
     }
 
     [HarmonyPatch(typeof(Body), nameof(Body.Jump))]
@@ -210,7 +220,7 @@ internal sealed class AstartesGear : IDisposable
 
     private void RegisterItems()
     {
-        bool chinese = Locale.currentLangName?.StartsWith("zh", StringComparison.OrdinalIgnoreCase) == true;
+        bool chinese = IsChinese;
         foreach (var item in items.Values)
         {
             item.Info.fullName = chinese ? item.ZhName : item.EnName;
@@ -220,10 +230,26 @@ internal sealed class AstartesGear : IDisposable
         }
     }
 
-    private Object LoadPrefab(string id)
+    private bool TryGetLocalizedText(string key, out string text)
+    {
+        bool description = key.EndsWith("dsc", StringComparison.Ordinal);
+        string id = description ? key.Substring(0, key.Length - 3) : key;
+        if (!items.TryGetValue(id, out var item))
+        {
+            text = "";
+            return false;
+        }
+        bool chinese = IsChinese;
+        text = description ? (chinese ? item.ZhDesc : item.EnDesc) : (chinese ? item.ZhName : item.EnName);
+        return true;
+    }
+
+    private Object LoadPrefab(string id) => LoadCustomPrefab(id) ?? Resources.Load(id);
+
+    internal GameObject? LoadCustomPrefab(string id)
     {
         if (!items.TryGetValue(id, out var item))
-            return Resources.Load(id);
+            return null;
         if (item.Prefab)
             return item.Prefab!;
 
@@ -345,6 +371,16 @@ internal sealed class AstartesGear : IDisposable
     private static class RegisterPatch
     {
         private static void Postfix() => AstartesPlugin.Gear.RegisterItems();
+    }
+
+    [HarmonyPatch(typeof(Locale), nameof(Locale.GetString))]
+    private static class ItemTextPatch
+    {
+        private static void Postfix(string str, int type, ref string __result)
+        {
+            if (type == 0 && AstartesPlugin.Gear.TryGetLocalizedText(str, out var text))
+                __result = text;
+        }
     }
 
     [HarmonyPatch(typeof(WorldGeneration), "Start")]
