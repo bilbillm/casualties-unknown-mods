@@ -13,7 +13,7 @@ public sealed class AstartesPlugin : BaseUnityPlugin
 {
     public const string PluginGuid = "casualtiesunknown.astartes-mod";
     public const string PluginName = "Astartes Mod";
-    public const string PluginVersion = "2.4.4";
+    public const string PluginVersion = "2.4.5";
 
     internal static AstartesProfile Profile { get; private set; } = null!;
     internal static AstartesSprites Sprites { get; private set; } = null!;

@@ -54,8 +54,25 @@ internal static class AstartesPhysiology
     private static void StoreMood(Body body, float value) => body.happiness =
         AstartesBody.IsAstartes(body) ? Mathf.Max(value, MoodFloor) : value;
 
-    private static void StoreTemperature(Body body, float value) => body.temperature =
-        AstartesBody.IsAstartes(body) ? NormalTemperature(value) : value;
+    private static void StoreTemperature(Body body, float value)
+    {
+        if (AstartesBody.IsAstartes(body))
+            value = NormalTemperature(value);
+        else if (value < 36.5f && AstartesGear.HasSealedArmour(body))
+            value = 36.5f;
+        body.temperature = value;
+    }
+
+    [HarmonyPatch(typeof(Body), "HandleBodyTemperature")]
+    private static class ArmourTemperaturePatch
+    {
+        private static void Prefix(Body __instance)
+        {
+            // 读档或穿上最后一件甲时，体温可能已经低于下限。
+            if (__instance.temperature < 36.5f && AstartesGear.HasSealedArmour(__instance))
+                __instance.temperature = 36.5f;
+        }
+    }
 
     private static void StoreVenomTotal(Body body, float value) => body.venomTotal =
         AstartesBody.IsAstartes(body) ? 0f : value;

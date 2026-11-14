@@ -19,7 +19,12 @@ internal sealed class AstartesGear : IDisposable
     internal const string PackId = "astartes_mkx_pack";
     internal const string SwordId = "astartes_chainsword";
     internal const float DurabilityMultiplier = 3f;
-    private const float PackRunSpeed = 1.15f;
+    private const float PackRunSpeed = 1.30f;
+    private const float BootJumpSpeed = 1.30f;
+    private const float GauntletArmPower = 2f;
+    private const float HelmetNightVision = 0.4f;
+    private static readonly int NightVisionAmount = Shader.PropertyToID("_NightVisAmount");
+    private static readonly int PosterizeSteps = Shader.PropertyToID("_PosterizeSteps");
 
     internal static bool IsPowerArmour(string? id) =>
         id is HelmetId or CuirassId or ShouldersId or ArmsId or LegsId or PackId;
@@ -35,39 +40,39 @@ internal sealed class AstartesGear : IDisposable
         var gear = new[]
         {
             Armour(HelmetId, "Mk X 动力头盔", "Mk X Power Helmet",
-                "装有红色目镜的陶钢头盔。为头部提供重型防护。",
-                "A red-lensed ceramite helmet. Provides heavy head protection.",
-                "hat", "Head", "MkXHelmet", 4.5f, 1.0f, 0.16f, 8),
+                "装有夜视目镜和听力防护的陶钢头盔。",
+                "A ceramite helmet with night vision and hearing protection.",
+                "hat", "Head", "MkXHelmet", 4.5f, 0.80f, 0.60f, 8),
             Armour(CuirassId, "Mk X 胸腹甲", "Mk X Cuirass",
                 "饰有金色帝国天鹰的陶钢胸腹甲。覆盖胸腔和腹部。",
                 "Ceramite cuirass with a gilded Aquila. Protects the chest and abdomen.",
-                "torsofront", "UpTorso", "MkXCuirass", 5.0f, 2.5f, 0.22f, 9, ("DownTorso", "MkXFauld")),
+                "torsofront", "UpTorso", "MkXCuirass", 5.0f, 2.00f, 1.20f, 9, ("DownTorso", "MkXFauld")),
             Armour(ShouldersId, "Mk X 肩甲", "Mk X Pauldrons",
                 "成对的金边肩甲，覆盖肩部与上臂。",
                 "Paired gilded pauldrons protect the shoulders and upper arms.",
-                "astartes_shoulders", "UpArmF", "MkXShoulder", 3.6f, 1.15f, 0.08f, 10, ("UpArmB", "MkXShoulderRear")),
+                "astartes_shoulders", "UpArmF", "MkXShoulder", 3.6f, 0.92f, 0.40f, 10, ("UpArmB", "MkXShoulderRear")),
             Armour(ArmsId, "Mk X 臂甲与手甲", "Mk X Vambraces and Gauntlets",
-                "分节陶钢护臂与动力手甲。覆盖前臂和双手。",
-                "Segmented ceramite bracers and powered gauntlets protect the forearms and hands.",
-                "astartes_arms", "DownArmF", "MkXVambrace", 3.0f, 1.15f, 0.08f, 8,
+                "保护前臂和双手。挖掘和近战时，手臂力量翻倍。",
+                "Protects forearms and hands. Doubles arm power for digging and melee swings.",
+                "astartes_arms", "DownArmF", "MkXVambrace", 3.0f, 0.92f, 0.50f, 8,
                 ("DownArmB", "MkXVambrace"), ("HandF", "MkXGauntlet"), ("HandB", "MkXGauntlet")),
             Armour(LegsId, "Mk X 腿甲与战靴", "Mk X Greaves and Sabatons",
-                "覆盖大腿、小腿和脚掌。起跳助力提高 12%。",
-                "Protects the thighs, shins and feet. Increases takeoff speed by 12%.",
-                "feet", "FootF", "MkXSabaton", 3.5f, 2.0f, 0.18f, 8,
+                "覆盖大腿、小腿和脚掌。起跳速度提高 30%。",
+                "Protects the thighs, shins and feet. Increases takeoff speed by 30%.",
+                "feet", "FootF", "MkXSabaton", 3.5f, 1.60f, 0.90f, 8,
                 ("ThighF", "MkXThigh"), ("ThighB", "MkXThigh"), ("CrusF", "MkXGreave"),
                 ("CrusB", "MkXGreave"), ("FootB", "MkXSabaton")),
             Armour(PackId, "Mk X 动力背包", "Mk X Power Pack",
-                "为伺服系统供电，外侧设有爆弹弹匣舱。穿戴时点亮广域照明灯，跑速提高 15%。",
-                "Powers the servos and carries bolt magazines. Wear it to activate the floodlight and increase run speed by 15%.",
-                "back", "UpTorso", "MkXPack", 0.65f, 2.2f, 0f, -18),
+                "穿戴时点亮泛光灯，跑速提高 30%。弹舱内物品免计负重。",
+                "Wear it to activate the floodlight and increase run speed by 30%. The ammunition compartment has 100% encumbrance reduction.",
+                "back", "UpTorso", "MkXPack", 0.65f, 1.76f, 0.40f, -18),
             new GearItem(SwordId, "machete", "Chainsword", "阿斯塔特链锯剑", "Astartes Chainsword",
                 "动力链刃，可撕裂生物和障碍。挥砍命中会消耗耐久。",
                 "A motor-driven chainblade that tears through creatures and obstacles. Hits wear down the blade.",
                 new ItemInfo
                 {
                     category = "tool", slotRotation = -90f, usable = true, usableWithLMB = true,
-                    autoAttack = true, destroyAtZeroCondition = true, weight = 2.7f,
+                    autoAttack = true, destroyAtZeroCondition = true, weight = 2.16f,
                     tags = "tool,backflip", value = 120, secret = true, untradeable = true,
                     rec = new Recognition(0), qualities = new List<CraftingQuality> { new("cutting", 400f) },
                     useAction = SwingChainsword
@@ -78,7 +83,7 @@ internal sealed class AstartesGear : IDisposable
                 new ItemInfo
                 {
                     category = "utility", slotRotation = -90f, usable = true, usableWithLMB = true,
-                    autoAttack = true, destroyAtZeroCondition = true, weight = 3.6f,
+                    autoAttack = true, destroyAtZeroCondition = true, weight = 2.88f,
                     tags = "gun", value = 220, secret = true, untradeable = true, rec = new Recognition(0),
                     useAction = (_, item) => item.GetComponent<GunScript>().triggerPressed = true
                 }, Array.Empty<(string, string)>()),
@@ -87,7 +92,7 @@ internal sealed class AstartesGear : IDisposable
                 "Holds up to 60 bolts for the Astartes boltgun.",
                 new ItemInfo
                 {
-                    category = "custom", slotRotation = -90f, usable = true, weight = 0.55f,
+                    category = "custom", slotRotation = -90f, usable = true, weight = 0.44f,
                     tags = "belttool,astartes_bolt_ammo", value = 70, secret = true, untradeable = true,
                     rec = new Recognition(0), useAction = (_, item) => item.GetComponent<AmmoScript>().UnloadRound()
                 }, Array.Empty<(string, string)>()),
@@ -96,7 +101,7 @@ internal sealed class AstartesGear : IDisposable
                 "An armour-piercing round for the Astartes boltgun. Fits a bolt magazine.",
                 new ItemInfo
                 {
-                    category = "custom", weight = 0.045f, tags = "bullet,astartes_bolt_ammo",
+                    category = "custom", weight = 0.036f, tags = "bullet,astartes_bolt_ammo",
                     value = 2, secret = true, untradeable = true, rec = new Recognition(0)
                 }, Array.Empty<(string, string)>())
         };
@@ -181,8 +186,18 @@ internal sealed class AstartesGear : IDisposable
 
     internal static bool HasHelmet(Body body) => IsWornAndIntact(body, "hat", HelmetId);
 
+    internal static bool HasSealedArmour(Body body) =>
+        IsWornAndIntact(body, "torsofront", CuirassId) &&
+        IsWornAndIntact(body, "back", PackId) &&
+        HasHelmet(body) &&
+        IsWornAndIntact(body, "astartes_shoulders", ShouldersId) &&
+        IsWornAndIntact(body, "astartes_arms", ArmsId) &&
+        IsWornAndIntact(body, "feet", LegsId);
+
     private static bool IsWornAndIntact(Body body, string slot, string id)
     {
+        if (!body || body.limbs == null)
+            return false;
         var piece = body.GetWearableBySlotID(slot);
         return piece && piece.id == id && piece.condition > 0f;
     }
@@ -192,8 +207,32 @@ internal sealed class AstartesGear : IDisposable
     {
         private static void Postfix(Body __instance, ref float __result)
         {
-            if (__instance.limbs != null && IsWornAndIntact(__instance, "back", PackId))
+            if (IsWornAndIntact(__instance, "back", PackId))
                 __result *= PackRunSpeed;
+        }
+    }
+
+    [HarmonyPatch(typeof(InventorySlot), nameof(InventorySlot.armPowerMult), MethodType.Getter)]
+    private static class GauntletServoPatch
+    {
+        private static void Postfix(InventorySlot __instance, ref float __result)
+        {
+            if (__instance.isHand && IsWornAndIntact(__instance.body, "astartes_arms", ArmsId))
+                __result *= GauntletArmPower;
+        }
+    }
+
+    [HarmonyPatch(typeof(PlayerCamera), "HandleScreenShaders")]
+    private static class HelmetNightVisionPatch
+    {
+        private static void Postfix(PlayerCamera __instance)
+        {
+            if (!HasHelmet(__instance.body))
+                return;
+
+            var screen = __instance.mainScreenPass;
+            screen.SetFloat(NightVisionAmount, Mathf.Max(screen.GetFloat(NightVisionAmount), HelmetNightVision));
+            screen.SetFloat(PosterizeSteps, Mathf.Max(screen.GetFloat(PosterizeSteps), 800f));
         }
     }
 
@@ -215,7 +254,7 @@ internal sealed class AstartesGear : IDisposable
         }
 
         private static float PoweredJumpSpeed(Body body) =>
-            body.actualJumpSpeed * (IsWornAndIntact(body, "feet", LegsId) ? 1.12f : 1f);
+            body.actualJumpSpeed * (IsWornAndIntact(body, "feet", LegsId) ? BootJumpSpeed : 1f);
     }
 
     private void RegisterItems()
@@ -291,6 +330,7 @@ internal sealed class AstartesGear : IDisposable
             var compartment = clone.AddComponent<Container>();
             compartment.maxWeight = 2f;
             compartment.maxWeightPerItem = 0.75f;
+            compartment.encumberanceMult = 0f;
             compartment.tagRestriction = new[] { "astartes_bolt_ammo" };
             AstartesPackLight.AddTo(clone);
         }
